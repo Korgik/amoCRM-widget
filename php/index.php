@@ -50,6 +50,7 @@ foreach ($all_leads as $key => $value) {
     $leads_info[$key]['contacts'][$key_data] = $value_data["name"];
   }
 
+
 }
 
 
@@ -58,8 +59,13 @@ foreach ($leads_info as $key => $value){
 }
 
 foreach ($leads_info as $key => $value){
-  $leads_info[$key]['custom_fields_values'] = implode(",", $value['custom_fields_values']);
-}
+  if(in_array($value['custom_fields_values'], $leads_info[$key]['custom_fields_values'])){
+      $leads_info[$key]['custom_fields_values'] = implode(",", $value['custom_fields_values']);
+    } else {
+
+    }
+  }
+print_r($leads_info);
 
 $fp = fopen('file.csv', 'w');
 
