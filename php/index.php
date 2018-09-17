@@ -19,7 +19,7 @@ foreach ($all_leads as $key => $value) {
   $leads_info[$key]['company'] = $value['company']['id'];
   $leads_info[$key]['contacts'] = $value['contacts']['id'];
   foreach ($value['custom_fields'] as $key_custom_value_all => $value_custom_all) {
-      foreach($value_custom_all["values"] as $key_values => $value_customs) {
+      foreach ($value_custom_all["values"] as $key_values => $value_customs) {
         $leads_info[$key]["custom_fields_values"][] = $value_customs["value"];
       }
   }
@@ -38,19 +38,20 @@ foreach ($all_leads as $key => $value) {
     $leads_info[$key]['contacts'][$key_data] = $value_data["name"];
   }
 }
+
 // Клеим контакты
 foreach ($leads_info as $key => $value) {
     $leads_info[$key]['contacts'] = implode(";", $value['contacts']);
 }
 // Клеим кастомное поля
 foreach ($leads_info as $key => $value) {
-    if(count($value['custom_fields_values']) > 0) {
+    if (count($value['custom_fields_values']) > 0) {
       $leads_info[$key]['custom_fields_values'] = implode(";", $value['custom_fields_values']);
     }
   }
 // Клеим теги
-foreach($leads_info as $key => $value) {
-  if(count($leads_info[$key]['tags']) > 0) {
+foreach ($leads_info as $key => $value) {
+  if (count($leads_info[$key]['tags']) > 0) {
     $leads_info[$key]['tags'] = implode(";", $value['tags']);
   }
 }
@@ -59,7 +60,7 @@ $fp = fopen('file.csv', 'w');
 $titles = ["Имя сделки", "Дата создания", "Компания", "Контакты", "Доп.поля", "Тэги"];
 fputcsv($fp, $titles, ",");
 
-foreach($leads_info as $key => $value) {
+foreach ($leads_info as $key => $value) {
   fputcsv($fp, $value, ",");
 }
 fclose($fp);

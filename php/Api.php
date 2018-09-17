@@ -5,10 +5,10 @@ class Api {
 
     public function api_auth($login, $hash, $subdomain) {
         #Массив с параметрами, которые нужно передать методом POST к API системы
-        $user = array(
+        $user = [
             'USER_LOGIN' => $login,
             'USER_HASH' => $hash,
-        );
+        ];
         #Формируем ссылку для запроса
         $link = "https://{$subdomain}.amocrm.ru/private/api/auth.php?type=json";
         /* Нам необходимо инициировать запрос к серверу. Воспользуемся библиотекой cURL (поставляется в составе PHP). Вы также
@@ -32,7 +32,7 @@ class Api {
         curl_close($curl); #Завершаем сеанс cURL
         /* Теперь мы можем обработать ответ, полученный от сервера.*/
         $code = (int)$code;
-        $errors = array(
+        $errors = [
             301 => 'Moved permanently',
             400 => 'Bad request',
             401 => 'Unauthorized',
@@ -41,7 +41,7 @@ class Api {
             500 => 'Internal server error',
             502 => 'Bad gateway',
             503 => 'Service unavailable',
-        );
+        ];
         try {
             #Если код ответа не равен 200 или 204 - возвращаем сообщение об ошибке
             if ($code != 200 && $code != 204) {
@@ -65,7 +65,7 @@ class Api {
     }
     public function list_contact($id_contact, $subdomain) {
         $query = "";
-            for($i=0;$i<count($id_contact); $i++) {
+            for ($i=0;$i<count($id_contact); $i++) {
             $query .= "id%5B%5D=".$id_contact[$i]."&";  
             }
         $query = substr($query, 0, -1);
@@ -111,7 +111,7 @@ class Api {
     }
     public function list_leads($_id_list, $subdomain) {
         $query = "";
-            for($i=0;$i<count($_id_list); $i++) {
+            for ($i=0;$i<count($_id_list); $i++) {
             $query .= "id%5B%5D=".$_id_list[$i]."&";  
             }
         $query = substr($query, 0, -1);
