@@ -23,7 +23,7 @@ foreach ($all_leads as $key => $value) {
       }
   }
   foreach ($value['tags'] as $tag_key => $tag_value) {
-    $leads_info[$key]['tags'] = $tag_value["name"];
+    $leads_info[$key]['tags'][] = $tag_value["name"];
   }
 // заносим компании
   $data_company_all = $api->list_company($leads_info[$key]['company']);
@@ -32,24 +32,29 @@ foreach ($all_leads as $key => $value) {
     $leads_info[$key]['company'] = $value_company[0]["name"];
   }
 
-// заносим контакты
+// заносим имена контактов вместо id
   $data_contact_all = $api->list_contact($leads_info[$key]['contacts']);
   foreach ($data_contact_all["_embedded"]["items"] as $key_data => $value_data) {
     $leads_info[$key]['contacts'][$key_data] = $value_data["name"];
   }
-
-
 }
-
+// Клеим контакты
 foreach ($leads_info as $key => $value) {
     $leads_info[$key]['contacts'] = implode(",", $value['contacts']);
 }
-
+// Клеим кастомное поля
 foreach ($leads_info as $key => $value) {
     if(count($value['custom_fields_values']) > 0) {
       $leads_info[$key]['custom_fields_values'] = implode(",", $value['custom_fields_values']);
     }
   }
+
+// Клеим теги
+foreach($leads_info as $key => $value) {
+  if(count($leads_info[$key]['tags']) > 0) {
+    $leads_info[$key]['tags'] = implode(",", $value['tags']);
+  }
+}
 
 $fp = fopen('file.csv', 'w');
 
