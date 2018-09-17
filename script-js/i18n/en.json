@@ -7,6 +7,6 @@
     "settings":{
         "login":"User login",
         "api_key":"API key",
-        "account":"Account"
+        "subdomain":"Subdomain"
     }
 }

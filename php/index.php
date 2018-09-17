@@ -3,13 +3,14 @@ header('Access-Control-Allow-Origin: ' . $_SERVER['HTTP_ORIGIN']);
 header('Access-Control-Allow-Headers: Origin,Content-Type,Accept,X-Requested-With');
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
 header('Access-Control-Allow-Headers: content-type');
-include "api.php";
+$data = $_POST;
+include "Api.php";
 $api = new Api();
-$_id_list = $_POST['ids'];
-$all_lead = $api->list_leads($_id_list);
 
+// Авторизация
+$api->api_auth($data['login'], $data['hash'], $data['subdomain']);
+$all_lead = $api->list_leads($data['ids'], $data['subdomain']);
 $all_leads = $all_lead["_embedded"]["items"];
-
 $leads_info = [];
 
 foreach ($all_leads as $key => $value) {
@@ -26,14 +27,13 @@ foreach ($all_leads as $key => $value) {
     $leads_info[$key]['tags'][] = $tag_value["name"];
   }
 // заносим компании
-  $data_company_all = $api->list_company($leads_info[$key]['company']);
+  $data_company_all = $api->list_company($leads_info[$key]['company'], $data['subdomain']);
   $data_company[] = $data_company_all["_embedded"]["items"];
   foreach ($data_company as $key_company => $value_company) {
     $leads_info[$key]['company'] = $value_company[0]["name"];
   }
-
 // заносим имена контактов вместо id
-  $data_contact_all = $api->list_contact($leads_info[$key]['contacts']);
+  $data_contact_all = $api->list_contact($leads_info[$key]['contacts'], $data['subdomain']);
   foreach ($data_contact_all["_embedded"]["items"] as $key_data => $value_data) {
     $leads_info[$key]['contacts'][$key_data] = $value_data["name"];
   }
@@ -48,7 +48,6 @@ foreach ($leads_info as $key => $value) {
       $leads_info[$key]['custom_fields_values'] = implode(",", $value['custom_fields_values']);
     }
   }
-
 // Клеим теги
 foreach($leads_info as $key => $value) {
   if(count($leads_info[$key]['tags']) > 0) {
@@ -57,10 +56,8 @@ foreach($leads_info as $key => $value) {
 }
 
 $fp = fopen('file.csv', 'w');
-
 $titles = ["Имя сделки", "Дата создания", "Компания", "Контакты", "Доп.поля", "Тэги"];
 fputcsv($fp, $titles, ",");
-
 
 foreach($leads_info as $key => $value) {
   fputcsv($fp, $value, ",");

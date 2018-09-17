@@ -1,6 +1,7 @@
 define(['jquery'], function ($) {
 	var CustomWidget = function () {
 		var self = this;
+
 		/*
 		 *html_data хранит разметку, которую необходимо поместить в правую колонку виджетов.
 		 */
@@ -27,6 +28,7 @@ define(['jquery'], function ($) {
 
 			},
 			init: function () {
+				system = self.system();
 				console.log('init');
 				return true;
 			},
@@ -46,24 +48,23 @@ define(['jquery'], function ($) {
 				selected: function () {
 					var elements = self.list_selected().selected;
 					var element_ids = [];
-
 					for (var i = 0; i < elements.length; i++) {
 						element_ids[i] = elements[i].id;
 					}
-					console.log(element_ids);
-					// url
-					$.ajax({
-						type: 'POST',
-						url: 'https://widget.ru/index.php',
-						data: { ids: element_ids },
-						success: function (responseData, textStatus, jqXHR) {
-							document.getElementById('url_id').href = responseData;
+						console.log(element_ids);
+						// url
+						$.ajax( {
+							type: 'POST',
+							url: 'https://widget.ru/index.php',
+							data: {ids: element_ids, login: system.amouser, hash: system.amohash, subdomain: system.subdomain},
+							success: function(responseData, textStatus, jqXHR) {
+								document.getElementById('url_id').href = responseData;
 							console.log("the response is", responseData);
-						},
-						error: function (responseData, textStatus, errorThrown) {
+							},
+							error: function (responseData, textStatus, errorThrown) {
 							console.warn(responseData, textStatus, errorThrown);
-						}
-					});
+							}
+							});
 				}
 			},
 		};

@@ -1,17 +1,16 @@
 <?
 
-class Api
-{
+class Api {
     public $_task = [];
 
-    public function api() {
+    public function api_auth($login, $hash, $subdomain) {
         #Массив с параметрами, которые нужно передать методом POST к API системы
         $user = array(
-            'USER_LOGIN' => 'adyneco@team.amocrm.com',
-            'USER_HASH' => 'eebef2ed84e6cc6adf24ccc8784dc9ad3cd9847c',
+            'USER_LOGIN' => $login,
+            'USER_HASH' => $hash,
         );
         #Формируем ссылку для запроса
-        $link = 'https://widgetkorgik.amocrm.ru/private/api/auth.php?type=json';
+        $link = "https://{$subdomain}.amocrm.ru/private/api/auth.php?type=json";
         /* Нам необходимо инициировать запрос к серверу. Воспользуемся библиотекой cURL (поставляется в составе PHP). Вы также
         можете
         использовать и кроссплатформенную программу cURL, если вы не программируете на PHP. */
@@ -64,14 +63,14 @@ class Api
 
         return 'Авторизация не удалась';
     }
-    public function list_contact($id_contact) {
+    public function list_contact($id_contact, $subdomain) {
         $query = "";
             for($i=0;$i<count($id_contact); $i++) {
             $query .= "id%5B%5D=".$id_contact[$i]."&";  
             }
         $query = substr($query, 0, -1);
 
-        $link = "https://widgetkorgik.amocrm.ru/api/v2/contacts/?{$query}";
+        $link = "https://{$subdomain}.amocrm.ru/api/v2/contacts/?{$query}";
 
         $headers[] = "Accept: application/json";
 
@@ -89,9 +88,9 @@ class Api
         $result = json_decode($out,TRUE);
         return $result;
     }
-    public function list_company($id) {
+    public function list_company($id, $subdomain) {
 
-        $link = "https://widgetkorgik.amocrm.ru/api/v2/companies?id={$id}";
+        $link = "https://{$subdomain}.amocrm.ru/api/v2/companies?id={$id}";
 
         $headers[] = "Accept: application/json";
 
@@ -110,16 +109,13 @@ class Api
         $result = json_decode($out,TRUE);
         return $result;
     }
-    public function list_leads($_id_list) {
+    public function list_leads($_id_list, $subdomain) {
         $query = "";
             for($i=0;$i<count($_id_list); $i++) {
             $query .= "id%5B%5D=".$_id_list[$i]."&";  
             }
         $query = substr($query, 0, -1);
-        // $offset = $n * 500;
-        // $id_leads = "id%5B%5D={$id}&";
-        $link = "https://widgetkorgik.amocrm.ru/api/v2/leads?{$query}";
-
+        $link = "https://{$subdomain}.amocrm.ru/api/v2/leads?{$query}";
         $headers[] = "Accept: application/json";
 
         //Curl options
