@@ -40,18 +40,18 @@ foreach ($all_leads as $key => $value) {
 }
 // Клеим контакты
 foreach ($leads_info as $key => $value) {
-    $leads_info[$key]['contacts'] = implode(",", $value['contacts']);
+    $leads_info[$key]['contacts'] = implode(";", $value['contacts']);
 }
 // Клеим кастомное поля
 foreach ($leads_info as $key => $value) {
     if(count($value['custom_fields_values']) > 0) {
-      $leads_info[$key]['custom_fields_values'] = implode(",", $value['custom_fields_values']);
+      $leads_info[$key]['custom_fields_values'] = implode(";", $value['custom_fields_values']);
     }
   }
 // Клеим теги
 foreach($leads_info as $key => $value) {
   if(count($leads_info[$key]['tags']) > 0) {
-    $leads_info[$key]['tags'] = implode(",", $value['tags']);
+    $leads_info[$key]['tags'] = implode(";", $value['tags']);
   }
 }
 

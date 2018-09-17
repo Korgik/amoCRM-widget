@@ -51,7 +51,6 @@ define(['jquery'], function ($) {
 					for (var i = 0; i < elements.length; i++) {
 						element_ids[i] = elements[i].id;
 					}
-						console.log(element_ids);
 						// url
 						$.ajax( {
 							type: 'POST',
