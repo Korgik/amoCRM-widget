@@ -5,7 +5,7 @@
             "short_description": "widget.short_description",
             "code": "korgikwidget",
             "secret_key": "e47ef5f535fd2f19f499e4c5714d359b1a15ac5aee7ff90b0b7c556ce15b6454",
-            "version": "0.0.91",
+            "version": "1.0.00",
             "interface_version": 2,
             "init_once": false,
             "locale":[

@@ -1,8 +1,8 @@
 {
     "widget":{
-        "name":"TestWidget",
-        "short_description":"Short description",
-        "description":"Full description"
+        "name":"CVS export",
+        "short_description":"Export the selected deals to CSV format",
+        "description":"When you select transactions window will appear, which will contain a link to download a csv file, once it turns blue, it is possible to download"
     },
     "settings":{
         "login":"User login",
