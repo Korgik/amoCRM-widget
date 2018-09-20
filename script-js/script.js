@@ -1,7 +1,6 @@
 define(['jquery'], function ($) {
 	var CustomWidget = function () {
 		var self = this;
-
 		/*
 		 *html_data хранит разметку, которую необходимо поместить в правую колонку виджетов.
 		 */
@@ -25,7 +24,6 @@ define(['jquery'], function ($) {
 					}
 				);
 				return true;
-
 			},
 			init: function () {
 				system = self.system();

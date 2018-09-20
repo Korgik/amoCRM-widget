@@ -1,9 +1,11 @@
 <?
 
-class Api {
+class Api
+{
     public $_task = [];
 
-    public function api_auth($login, $hash, $subdomain) {
+    public function api_auth($login, $hash, $subdomain)
+    {
         #Массив с параметрами, которые нужно передать методом POST к API системы
         $user = [
             'USER_LOGIN' => $login,
@@ -63,11 +65,12 @@ class Api {
 
         return 'Авторизация не удалась';
     }
-    public function list_contact($id_contact, $subdomain) {
+    public function list_contact($id_contact, $subdomain)
+    {
         $query = "";
-            for ($i=0;$i<count($id_contact); $i++) {
-            $query .= "id%5B%5D=".$id_contact[$i]."&";  
-            }
+        for ($i = 0; $i < count($id_contact); $i++) {
+            $query .= "id%5B%5D=" . $id_contact[$i] . "&";
+        }
         $query = substr($query, 0, -1);
 
         $link = "https://{$subdomain}.amocrm.ru/api/v2/contacts/?{$query}";
@@ -76,19 +79,20 @@ class Api {
 
         //Curl options
         $curl = curl_init();
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_USERAGENT, "amoCRM-API-client-undefined/2.0");
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($curl, CURLOPT_URL, $link);
-        curl_setopt($curl, CURLOPT_HEADER,false);
-        curl_setopt($curl,CURLOPT_COOKIEFILE,dirname(__FILE__)."/cookie.txt");
-        curl_setopt($curl,CURLOPT_COOKIEJAR,dirname(__FILE__)."/cookie.txt");
+        curl_setopt($curl, CURLOPT_HEADER, false);
+        curl_setopt($curl, CURLOPT_COOKIEFILE, dirname(__FILE__) . "/cookie.txt");
+        curl_setopt($curl, CURLOPT_COOKIEJAR, dirname(__FILE__) . "/cookie.txt");
         $out = curl_exec($curl);
         curl_close($curl);
-        $result = json_decode($out,TRUE);
+        $result = json_decode($out, true);
         return $result;
     }
-    public function list_company($id, $subdomain) {
+    public function list_company($id, $subdomain)
+    {
 
         $link = "https://{$subdomain}.amocrm.ru/api/v2/companies?id={$id}";
 
@@ -96,43 +100,68 @@ class Api {
 
         //Curl options
         $curl = curl_init();
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_USERAGENT, "amoCRM-API-client-
         undefined/2.0");
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($curl, CURLOPT_URL, $link);
-        curl_setopt($curl, CURLOPT_HEADER,false);
-        curl_setopt($curl,CURLOPT_COOKIEFILE,dirname(__FILE__)."/cookie.txt");
-        curl_setopt($curl,CURLOPT_COOKIEJAR,dirname(__FILE__)."/cookie.txt");
+        curl_setopt($curl, CURLOPT_HEADER, false);
+        curl_setopt($curl, CURLOPT_COOKIEFILE, dirname(__FILE__) . "/cookie.txt");
+        curl_setopt($curl, CURLOPT_COOKIEJAR, dirname(__FILE__) . "/cookie.txt");
         $out = curl_exec($curl);
         curl_close($curl);
-        $result = json_decode($out,TRUE);
+        $result = json_decode($out, true);
         return $result;
     }
-    public function list_leads($_id_list, $subdomain) {
+    public function list_leads($_id_list, $subdomain)
+    {
         $query = "";
-            for ($i=0;$i<count($_id_list); $i++) {
-            $query .= "id%5B%5D=".$_id_list[$i]."&";  
-            }
+        for ($i = 0; $i < count($_id_list); $i++) {
+            $query .= "id%5B%5D=" . $_id_list[$i] . "&";
+        }
         $query = substr($query, 0, -1);
         $link = "https://{$subdomain}.amocrm.ru/api/v2/leads?{$query}";
         $headers[] = "Accept: application/json";
 
         //Curl options
         $curl = curl_init();
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER,true);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_USERAGENT, "amoCRM-API-client-undefined/2.0");
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($curl, CURLOPT_URL, $link);
-        curl_setopt($curl, CURLOPT_HEADER,false);
-        curl_setopt($curl,CURLOPT_COOKIEFILE,dirname(__FILE__)."/cookie.txt");
-        curl_setopt($curl,CURLOPT_COOKIEJAR,dirname(__FILE__)."/cookie.txt");
+        curl_setopt($curl, CURLOPT_HEADER, false);
+        curl_setopt($curl, CURLOPT_COOKIEFILE, dirname(__FILE__) . "/cookie.txt");
+        curl_setopt($curl, CURLOPT_COOKIEJAR, dirname(__FILE__) . "/cookie.txt");
         $out = curl_exec($curl);
         curl_close($curl);
-        $result = json_decode($out,TRUE);
+        $result = json_decode($out, true);
         return $result;
     }
-    public function my_print($data) {
+
+    public function custom_field($subdomain)
+    {
+        $link = "https://{$subdomain}.amocrm.ru/api/v2/account?with=custom_fields";
+
+        $headers[] = "Accept: application/json";
+
+         //Curl options
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_USERAGENT, "amoCRM-API-client-undefined/2.0");
+        curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($curl, CURLOPT_URL, $link);
+        curl_setopt($curl, CURLOPT_HEADER, false);
+        curl_setopt($curl, CURLOPT_COOKIEFILE, dirname(__FILE__) . "/cookie.txt");
+        curl_setopt($curl, CURLOPT_COOKIEJAR, dirname(__FILE__) . "/cookie.txt");
+        $out = curl_exec($curl);
+        curl_close($curl);
+        $result = json_decode($out, true);
+        return $result;
+    }
+
+
+    public function my_print($data)
+    {
         print_r("<pre>");
         print_r($data);
         print_r("</pre>");

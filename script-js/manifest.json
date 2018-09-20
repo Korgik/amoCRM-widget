@@ -1,41 +1,31 @@
 {
-    "widget":{
-            "name": "widget.name",
-            "description": "widget.description",
-            "short_description": "widget.short_description",
-            "code": "korgikwidget",
-            "secret_key": "e47ef5f535fd2f19f499e4c5714d359b1a15ac5aee7ff90b0b7c556ce15b6454",
-            "version": "1.2.00",
-            "interface_version": 2,
-            "init_once": false,
-            "locale":[
-                    "ru",
-                    "en"
-                    ],
-            "installation": true
-            },
-    "locations":[
-            "ccard-1",
-            "clist-0",
-            "lcard-1",
-            "llist-0",
-            "settings"
-            ],
-    "settings":{
-                "login":{
+        "widget": {
+                "name": "widget.name",
+                "description": "widget.description",
+                "short_description": "widget.short_description",
+                "code": "korgikwidget",
+                "secret_key": "e47ef5f535fd2f19f499e4c5714d359b1a15ac5aee7ff90b0b7c556ce15b6454",
+                "version": "1.4.50",
+                "interface_version": 2,
+                "init_once": false,
+                "locale": [
+                        "ru",
+                        "en"
+                ],
+                "installation": true
+        },
+        "locations": [
+                "ccard-1",
+                "clist-0",
+                "lcard-1",
+                "llist-0",
+                "settings"
+        ],
+        "settings": {
+                "terms": {
                         "name": "settings.login",
-                        "type": "text",
+                        "type": "custom",
                         "required": true
-                        },
-                "api_key":{
-                        "name": "settings.api_key",
-                        "type": "text",
-                        "required": true
-                        },
-                "subdomain":{
-                        "name": "settings.subdomain",
-                        "type": "text",
-                        "required": true
-                        }
-            }
+                }
+        }
 }
